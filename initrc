@@ -1,0 +1,20 @@
+alias ls = 'exa'
+alias ll = 'exa -l'
+alias lg = 'exa -l --git'
+alias gs = 'git status'
+alias ga = 'git add'
+let NS_PLUGINS = 1
+
+export PATH = "$PATH:/home/timm.behner/neovim/bin:/home/timm.behner/.cargo/bin:/home/timm.behner/.local/bin"
+export EDITOR = "nvim"
+
+export http_proxy = "http://www-cache.fkie.fraunhofer.de:3128"
+export https_proxy = $http_proxy
+export HTTP_PROXY = "http://www-cache.fkie.fraunhofer.de:3128"
+export HTTPS_PROXY = $HTTP_PROXY
+
+
+# use the "chad" theme as your prompt
+fn PROMPT
+    echo -n $(candypaint darkside)
+end
