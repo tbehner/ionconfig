@@ -5,7 +5,7 @@ alias gs = 'git status'
 alias ga = 'git add'
 let NS_PLUGINS = 1
 
-export PATH = "$PATH:/home/timm.behner/neovim/bin:/home/timm.behner/.cargo/bin:/home/timm.behner/.local/bin:/home/timm.behner/.fzf/bin"
+export PATH = "$PATH:/home/timm/neovim/bin:/home/timm/.cargo/bin:/home/timm/.local/bin:/home/timm/.fzf/bin"
 export EDITOR = "nvim"
 
 export http_proxy = "http://www-cache.fkie.fraunhofer.de:3128"
@@ -17,5 +17,9 @@ export HTTPS_PROXY = $HTTP_PROXY
 # use the "chad" theme as your prompt
 fn PROMPT
 #    echo -n $(candypaint darkside)
-    echo -n "${color::default,bold}$USER${color::reset}:${color::default,bold}$PWD${color::reset} >> "
+    let splitpath = [ @split($PWD, '/') ]
+    let pathlength = $len(@splitpath)
+    let max = $(( pathlength - 3 ))
+    let shortpath = $join(@splitpath[$max..], "/")
+    echo -n "${color::default,bold}$USER${color::reset}:${color::default,bold}$shortpath${color::reset} >> "
 end
