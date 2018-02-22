@@ -3,20 +3,36 @@ alias ll = 'exa -l'
 alias lg = 'exa -l --git'
 alias gs = 'git status'
 alias ga = 'git add'
+alias ta = 'tmux attach -t'
+alias tls = 'tmux ls'
+alias tnew = 'tmux new-session -s'
 let NS_PLUGINS = 1
 
 export PATH = "$PATH:/home/timm/neovim/bin:/home/timm/.cargo/bin:/home/timm/.local/bin:/home/timm/.fzf/bin"
 export EDITOR = "nvim"
 
-export http_proxy = "http://www-cache.fkie.fraunhofer.de:3128"
-export https_proxy = $http_proxy
-export HTTP_PROXY = "http://www-cache.fkie.fraunhofer.de:3128"
-export HTTPS_PROXY = $HTTP_PROXY
 
+fn proxy_on
+    export http_proxy = "http://www-cache.fkie.fraunhofer.de:3128"
+    export https_proxy = $http_proxy
+    export HTTP_PROXY = "http://www-cache.fkie.fraunhofer.de:3128"
+    export HTTPS_PROXY = $HTTP_PROXY
 
-# use the "chad" theme as your prompt
+    sudo sed -in "s/^#proxy/proxy/g" /etc/dnf/dnf.conf
+    sed -in "s/^;proxy/proxy/g" /home/timm.behner/.gitconfig
+end
+
+fn proxy_off
+    drop $http_proxy
+    drop $https_proxy
+    drop $HTTP_PROXY
+    drop $HTTPS_PROXY
+
+    sudo sed -in "s/^proxy/#proxy/g" /etc/dnf/dnf.conf
+    sed -in "s/^proxy/;proxy/g" /home/timm.behner/.gitconfig
+end
+
 fn PROMPT
-#    echo -n $(candypaint darkside)
     let splitpath = [ @split($PWD, '/') ]
     let pathlength = $len(@splitpath)
     let max = $(( pathlength - 3 ))
